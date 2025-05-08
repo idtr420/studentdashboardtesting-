@@ -18,6 +18,12 @@
             min-height: 100vh;
             background-color: #f5f5f5;
             color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
         }
 
         /* Sidebar Styles */
@@ -31,6 +37,11 @@
             padding: 20px 0;
             transition: all 0.3s;
             overflow-y: auto;
+            z-index: 100;
+        }
+
+        body.dark-mode .sidebar {
+            background-color: #1e2a38;
         }
 
         .sidebar-header {
@@ -86,6 +97,10 @@
             color: white;
         }
 
+        body.dark-mode .nav-link.active {
+            background-color: #2980b9;
+        }
+
         .nav-link i {
             margin-right: 10px;
             font-size: 1.2rem;
@@ -105,6 +120,12 @@
             padding: 25px;
             margin-bottom: 30px;
             min-height: 300px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        body.dark-mode .section {
+            background-color: #2d2d2d;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .section h2 {
@@ -112,6 +133,12 @@
             color: #2c3e50;
             padding-bottom: 10px;
             border-bottom: 2px solid #f1f1f1;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        body.dark-mode .section h2 {
+            color: #3498db;
+            border-bottom-color: #444;
         }
 
         .card-container {
@@ -125,7 +152,11 @@
             background-color: #f9f9f9;
             border-radius: 6px;
             padding: 15px;
-            transition: transform 0.3s;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+        }
+
+        body.dark-mode .card {
+            background-color: #3a3a3a;
         }
 
         .card:hover {
@@ -133,9 +164,287 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
+        body.dark-mode .card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
         .card h3 {
             margin-bottom: 10px;
             color: #3498db;
+            transition: color 0.3s;
+        }
+
+        body.dark-mode .card h3 {
+            color: #5dade2;
+        }
+
+        /* Settings Button */
+        .settings-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            z-index: 99;
+        }
+
+        .settings-btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.1);
+        }
+
+        .settings-btn i {
+            font-size: 1.5rem;
+        }
+
+        body.dark-mode .settings-btn {
+            background-color: #2980b9;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            position: relative;
+        }
+
+        body.dark-mode .modal {
+            background-color: #2d2d2d;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+            transition: color 0.3s;
+        }
+
+        body.dark-mode .modal-close {
+            color: #aaa;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        body.dark-mode .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        body.dark-mode .modal h2 {
+            color: #f0f0f0;
+        }
+
+        .modal-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        body.dark-mode .modal-section {
+            border-bottom-color: #444;
+        }
+
+        .modal-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .modal-section h3 {
+            margin-bottom: 15px;
+            color: #3498db;
+        }
+
+        body.dark-mode .modal-section h3 {
+            color: #5dade2;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #3498db;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+
+        .toggle-label {
+            margin-left: 15px;
+            vertical-align: middle;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #3a3a3a;
+            border-color: #555;
+            color: #f0f0f0;
+        }
+
+        .form-control:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        /* Tab Navigation for Modal */
+        .modal-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        body.dark-mode .modal-tabs {
+            border-bottom-color: #444;
+        }
+
+        .modal-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .modal-tab.active {
+            border-bottom-color: #3498db;
+            font-weight: 500;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         /* Responsive Styles */
@@ -156,6 +465,7 @@
                 overflow-x: auto;
                 padding: 10px 0;
                 white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
             }
 
             .nav-item {
@@ -171,11 +481,24 @@
             .main-content {
                 padding: 20px;
             }
+
+            .settings-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
         }
 
         /* Animation for smooth scrolling */
         html {
             scroll-behavior: smooth;
+        }
+
+        /* Focus styles for accessibility */
+        a:focus, button:focus, input:focus, .settings-btn:focus {
+            outline: 2px solid #3498db;
+            outline-offset: 2px;
         }
     </style>
     <!-- Font Awesome for icons -->
@@ -183,7 +506,7 @@
 </head>
 <body>
     <!-- Sidebar Navigation -->
-    <nav class="sidebar">
+    <nav class="sidebar" aria-label="Main navigation">
         <div class="sidebar-header">
             <img src="https://via.placeholder.com/80" alt="Student Profile" class="profile-img">
             <h2>John Doe</h2>
@@ -191,7 +514,7 @@
         </div>
         <ul class="nav-menu">
             <li class="nav-item">
-                <a href="#dashboard" class="nav-link active">
+                <a href="#dashboard" class="nav-link active" aria-current="page">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -220,19 +543,13 @@
                     <span>Messages</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="#settings" class="nav-link">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </a>
-            </li>
         </ul>
     </nav>
 
     <!-- Main Content -->
     <main class="main-content">
-        <section id="dashboard" class="section">
-            <h2>Dashboard Overview</h2>
+        <section id="dashboard" class="section" aria-labelledby="dashboard-heading">
+            <h2 id="dashboard-heading">Dashboard Overview</h2>
             <div class="card-container">
                 <div class="card">
                     <h3>Current Courses</h3>
@@ -253,8 +570,8 @@
             </div>
         </section>
 
-        <section id="assignments" class="section">
-            <h2>Assignments</h2>
+        <section id="assignments" class="section" aria-labelledby="assignments-heading">
+            <h2 id="assignments-heading">Assignments</h2>
             <div class="card-container">
                 <div class="card">
                     <h3>Web Development</h3>
@@ -279,8 +596,8 @@
             </div>
         </section>
 
-        <section id="grades" class="section">
-            <h2>Grades</h2>
+        <section id="grades" class="section" aria-labelledby="grades-heading">
+            <h2 id="grades-heading">Grades</h2>
             <div class="card-container">
                 <div class="card">
                     <h3>Web Development</h3>
@@ -305,8 +622,8 @@
             </div>
         </section>
 
-        <section id="profile" class="section">
-            <h2>Profile Information</h2>
+        <section id="profile" class="section" aria-labelledby="profile-heading">
+            <h2 id="profile-heading">Profile Information</h2>
             <div class="card">
                 <h3>Personal Details</h3>
                 <p><strong>Name:</strong> John Doe</p>
@@ -316,35 +633,136 @@
             </div>
         </section>
 
-        <section id="messages" class="section">
-            <h2>Messages</h2>
+        <section id="messages" class="section" aria-labelledby="messages-heading">
+            <h2 id="messages-heading">Messages</h2>
             <div class="card">
                 <h3>Recent Conversations</h3>
                 <p>No new messages</p>
             </div>
         </section>
-
-        <section id="settings" class="section">
-            <h2>Account Settings</h2>
-            <div class="card">
-                <h3>Preferences</h3>
-                <p>Notification settings</p>
-                <p>Theme preferences</p>
-                <p>Privacy controls</p>
-            </div>
-        </section>
     </main>
+
+    <!-- Settings Button -->
+    <button class="settings-btn" aria-label="Open settings" id="settingsBtn">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+            <h2 id="modalTitle">Settings</h2>
+            
+            <div class="modal-tabs">
+                <div class="modal-tab active" data-tab="appearance">Appearance</div>
+                <div class="modal-tab" data-tab="profile">Profile</div>
+                <div class="modal-tab" data-tab="password">Password</div>
+            </div>
+            
+            <!-- Appearance Tab -->
+            <div class="tab-content active" id="appearance-tab">
+                <div class="modal-section">
+                    <h3>Theme Preferences</h3>
+                    <div class="form-group">
+                        <label for="darkModeToggle">Dark Mode</label>
+                        <div style="display: flex; align-items: center;">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkModeToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label" id="themeStatus">Off</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Tab -->
+            <div class="tab-content" id="profile-tab">
+                <div class="modal-section">
+                    <h3>Edit Profile</h3>
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" class="form-control" value="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" value="john.doe@university.edu">
+                        </div>
+                        <div class="form-group">
+                            <label for="major">Major</label>
+                            <input type="text" id="major" class="form-control" value="Computer Science">
+                        </div>
+                        <button type="submit" class="btn btn-block">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Password Tab -->
+            <div class="tab-content" id="password-tab">
+                <div class="modal-section">
+                    <h3>Change Password</h3>
+                    <form id="passwordForm">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-block">Update Password</button>
+                    </form>
+                </div>
+                
+                <div class="modal-section">
+                    <h3>Forgot Password</h3>
+                    <form id="forgotPasswordForm">
+                        <div class="form-group">
+                            <label for="forgotEmail">Email Address</label>
+                            <input type="email" id="forgotEmail" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-block">Send Reset Link</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Highlight active section in sidebar while scrolling
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('.section');
             const navLinks = document.querySelectorAll('.nav-link');
-
+            const settingsBtn = document.getElementById('settingsBtn');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalClose = document.getElementById('modalClose');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const themeStatus = document.getElementById('themeStatus');
+            const modalTabs = document.querySelectorAll('.modal-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const profileForm = document.getElementById('profileForm');
+            const passwordForm = document.getElementById('passwordForm');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            
+            // Check for saved theme preference or use system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.checked = true;
+                themeStatus.textContent = 'On';
+            }
+            
             // Function to update active nav link
             function updateActiveNav() {
                 let index = sections.length;
-
+                
                 // Check which section is in view
                 while(--index && window.scrollY + 100 < sections[index].offsetTop) {}
                 
@@ -352,15 +770,25 @@
                 navLinks.forEach(link => link.classList.remove('active'));
                 
                 // Add active class to corresponding nav link
-                navLinks[index].classList.add('active');
+                if (navLinks[index]) {
+                    navLinks[index].classList.add('active');
+                    navLinks[index].setAttribute('aria-current', 'page');
+                }
+                
+                // Remove aria-current from other links
+                navLinks.forEach((link, i) => {
+                    if (i !== index) {
+                        link.removeAttribute('aria-current');
+                    }
+                });
             }
-
+            
             // Initial call to set active nav on page load
             updateActiveNav();
-
+            
             // Update active nav on scroll
             window.addEventListener('scroll', updateActiveNav);
-
+            
             // Smooth scrolling for navigation links
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -372,12 +800,101 @@
                     targetSection.scrollIntoView({
                         behavior: 'smooth'
                     });
-
+                    
                     // Update active nav after scroll completes
                     setTimeout(updateActiveNav, 1000);
                 });
             });
-
+            
+            // Modal functionality
+            function openModal() {
+                modalOverlay.classList.add('active');
+                modalOverlay.setAttribute('aria-hidden', 'false');
+                // Focus on first interactive element in modal
+                document.querySelector('.modal-tab').focus();
+                // Trap focus inside modal
+                trapFocus(modalOverlay);
+            }
+            
+            function closeModal() {
+                modalOverlay.classList.remove('active');
+                modalOverlay.setAttribute('aria-hidden', 'true');
+                // Return focus to settings button
+                settingsBtn.focus();
+            }
+            
+            settingsBtn.addEventListener('click', openModal);
+            modalClose.addEventListener('click', closeModal);
+            
+            // Close modal when clicking outside
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+            
+            // Dark mode toggle
+            darkModeToggle.addEventListener('change', function() {
+                document.body.classList.toggle('dark-mode');
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                themeStatus.textContent = isDarkMode ? 'On' : 'Off';
+                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            });
+            
+            // Tab switching
+            modalTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    modalTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active content
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // Form submissions
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // In a real app, you would send this data to a server
+                alert('Profile updated successfully!');
+                closeModal();
+            });
+            
+            passwordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (newPassword !== confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+                
+                // In a real app, you would send this data to a server
+                alert('Password changed successfully!');
+                this.reset();
+            });
+            
+            forgotPasswordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('forgotEmail').value;
+                
+                // In a real app, you would send this email to a server
+                alert(`Password reset link sent to ${email}`);
+                this.reset();
+            });
+            
             // Responsive behavior for mobile
             function handleMobileView() {
                 const sidebar = document.querySelector('.sidebar');
@@ -389,10 +906,37 @@
                     sidebar.style.position = 'sticky';
                 }
             }
-
+            
             // Initial call and event listener for window resize
             handleMobileView();
             window.addEventListener('resize', handleMobileView);
+            
+            // Focus trap for modal accessibility
+            function trapFocus(element) {
+                const focusableElements = element.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                );
+                const firstFocusable = focusableElements[0];
+                const lastFocusable = focusableElements[focusableElements.length - 1];
+                
+                element.addEventListener('keydown', function(e) {
+                    if (e.key !== 'Tab') return;
+                    
+                    if (e.shiftKey) {
+                        if (document.activeElement === firstFocusable) {
+                            lastFocusable.focus();
+                            e.preventDefault();
+                        }
+                    } else {
+                        if (document.activeElement === lastFocusable) {
+                            firstFocusable.focus();
+                            e.preventDefault();
+                        }
+                    }
+                });
+                
+                firstFocusable.focus();
+            }
         });
     </script>
 </body>
