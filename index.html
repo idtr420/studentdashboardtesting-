@@ -3,941 +3,454 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard</title>
+    <title>Student Dashboard - NeoLearn</title>
     <style>
-        /* Reset and Base Styles */
-        * {
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            display: flex;
-            min-height: 100vh;
-            background-color: #f5f5f5;
             color: #333;
-            transition: background-color 0.3s, color 0.3s;
         }
-
-        body.dark-mode {
-            background-color: #1a1a1a;
-            color: #f0f0f0;
+        
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
         }
-
-        /* Sidebar Styles */
+        
         .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
             color: white;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            padding: 20px 0;
-            transition: all 0.3s;
-            overflow-y: auto;
-            z-index: 100;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         }
-
-        body.dark-mode .sidebar {
-            background-color: #1e2a38;
+        
+        .main-content {
+            padding: 30px;
+            background-color: white;
         }
-
-        .sidebar-header {
-            text-align: center;
-            padding: 0 20px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
         }
-
-        .sidebar-header h2 {
-            margin-bottom: 5px;
-            font-size: 1.5rem;
+        
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #1a2a6c;
+            font-weight: 600;
         }
-
-        .sidebar-header p {
-            font-size: 0.8rem;
-            color: #bdc3c7;
-        }
-
-        .profile-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 15px;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .nav-menu {
-            list-style: none;
-            padding: 20px 0;
-        }
-
-        .nav-item {
-            margin-bottom: 5px;
-        }
-
-        .nav-link {
+        
+        .user-info {
             display: flex;
             align-items: center;
-            padding: 12px 20px;
-            color: #bdc3c7;
-            text-decoration: none;
-            transition: all 0.3s;
+            gap: 10px;
         }
-
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #1a2a6c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
+            font-weight: bold;
         }
-
-        .nav-link.active {
-            background-color: #3498db;
-            color: white;
-        }
-
-        body.dark-mode .nav-link.active {
-            background-color: #2980b9;
-        }
-
-        .nav-link i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        /* Main Content Styles */
-        .main-content {
-            flex: 1;
-            padding: 30px;
-            overflow-y: auto;
-        }
-
-        .section {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 25px;
-            margin-bottom: 30px;
-            min-height: 300px;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-
-        body.dark-mode .section {
-            background-color: #2d2d2d;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .section h2 {
-            margin-bottom: 20px;
-            color: #2c3e50;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f1f1f1;
-            transition: color 0.3s, border-color 0.3s;
-        }
-
-        body.dark-mode .section h2 {
-            color: #3498db;
-            border-bottom-color: #444;
-        }
-
+        
         .card-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
-            margin-top: 20px;
+            margin-bottom: 30px;
         }
-
+        
         .card {
-            background-color: #f9f9f9;
-            border-radius: 6px;
-            padding: 15px;
-            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
-        body.dark-mode .card {
-            background-color: #3a3a3a;
-        }
-
+        
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-
-        body.dark-mode .card:hover {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
+        
         .card h3 {
-            margin-bottom: 10px;
-            color: #3498db;
-            transition: color 0.3s;
+            margin-top: 0;
+            color: #1a2a6c;
         }
-
-        body.dark-mode .card h3 {
-            color: #5dade2;
+        
+        .blue-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #e6f0ff;
+            border-radius: 8px;
+            overflow: hidden;
         }
-
-        /* Settings Button */
-        .settings-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background-color: #3498db;
+        
+        .blue-table th {
+            background-color: #1a2a6c;
             color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-            z-index: 99;
+            padding: 12px 15px;
+            text-align: left;
         }
-
-        .settings-btn:hover {
-            background-color: #2980b9;
-            transform: scale(1.1);
+        
+        .blue-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #d6e0f5;
         }
-
-        .settings-btn i {
-            font-size: 1.5rem;
-        }
-
-        body.dark-mode .settings-btn {
-            background-color: #2980b9;
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal {
-            background-color: white;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 30px;
-            transform: scale(0.8);
-            opacity: 0;
-            transition: transform 0.3s, opacity 0.3s;
-            position: relative;
-        }
-
-        body.dark-mode .modal {
-            background-color: #2d2d2d;
-        }
-
-        .modal-overlay.active .modal {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #777;
-            transition: color 0.3s;
-        }
-
-        body.dark-mode .modal-close {
-            color: #aaa;
-        }
-
-        .modal-close:hover {
-            color: #333;
-        }
-
-        body.dark-mode .modal-close:hover {
-            color: #fff;
-        }
-
-        .modal h2 {
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-
-        body.dark-mode .modal h2 {
-            color: #f0f0f0;
-        }
-
-        .modal-section {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        body.dark-mode .modal-section {
-            border-bottom-color: #444;
-        }
-
-        .modal-section:last-child {
+        
+        .blue-table tr:last-child td {
             border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
         }
-
-        .modal-section h3 {
-            margin-bottom: 15px;
-            color: #3498db;
+        
+        .blue-table tr:hover {
+            background-color: #d6e0f5;
         }
-
-        body.dark-mode .modal-section h3 {
-            color: #5dade2;
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-top: 5px;
         }
-
-        /* Toggle Switch */
-        .toggle-switch {
-            position: relative;
+        
+        .progress {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #1a2a6c, #4a6bdf);
+        }
+        
+        .badge {
             display: inline-block;
-            width: 60px;
-            height: 30px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
         }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
+        
+        .badge-primary {
+            background-color: #e6f0ff;
+            color: #1a2a6c;
         }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
+        
+        .badge-success {
+            background-color: #e6ffed;
+            color: #1a7f37;
         }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
+        
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
         }
-
-        input:checked + .toggle-slider {
-            background-color: #3498db;
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(30px);
-        }
-
-        .toggle-label {
-            margin-left: 15px;
-            vertical-align: middle;
-        }
-
-        /* Form Styles */
-        .form-group {
+        
+        .sidebar-nav li {
             margin-bottom: 15px;
         }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-            transition: border-color 0.3s, background-color 0.3s;
-        }
-
-        body.dark-mode .form-control {
-            background-color: #3a3a3a;
-            border-color: #555;
-            color: #f0f0f0;
-        }
-
-        .form-control:focus {
-            border-color: #3498db;
-            outline: none;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            background-color: #3498db;
+        
+        .sidebar-nav a {
             color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #2980b9;
-        }
-
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-
-        /* Tab Navigation for Modal */
-        .modal-tabs {
+            text-decoration: none;
             display: flex;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 20px;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
         }
-
-        body.dark-mode .modal-tabs {
-            border-bottom-color: #444;
+        
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background-color: rgba(255,255,255,0.2);
         }
-
-        .modal-tab {
-            padding: 10px 20px;
+        
+        .sidebar-nav i {
+            font-size: 18px;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a2a6c;
+        }
+        
+        .notification-bell {
+            position: relative;
             cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
         }
-
-        .modal-tab.active {
-            border-bottom-color: #3498db;
-            font-weight: 500;
+        
+        .notification-dot {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 10px;
+            height: 10px;
+            background-color: #ff4757;
+            border-radius: 50%;
+            border: 2px solid white;
         }
-
-        .tab-content {
-            display: none;
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 20px;
+            padding: 8px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            width: 300px;
         }
-
-        .tab-content.active {
-            display: block;
+        
+        .search-bar input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 5px;
         }
-
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                padding: 15px 0;
-            }
-
-            .nav-menu {
-                display: flex;
-                overflow-x: auto;
-                padding: 10px 0;
-                white-space: nowrap;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .nav-item {
-                margin-bottom: 0;
-                margin-right: 5px;
-            }
-
-            .nav-link {
-                padding: 10px 15px;
-                border-radius: 20px;
-            }
-
-            .main-content {
-                padding: 20px;
-            }
-
-            .settings-btn {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-            }
+        
+        .upcoming-events {
+            margin-top: 30px;
         }
-
-        /* Animation for smooth scrolling */
-        html {
-            scroll-behavior: smooth;
+        
+        .event-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
         }
-
-        /* Focus styles for accessibility */
-        a:focus, button:focus, input:focus, .settings-btn:focus {
-            outline: 2px solid #3498db;
-            outline-offset: 2px;
+        
+        .event-date {
+            background-color: #1a2a6c;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .event-date .month {
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+        
+        .event-info h4 {
+            margin: 0 0 5px 0;
+            font-size: 15px;
+        }
+        
+        .event-info p {
+            margin: 0;
+            font-size: 13px;
+            color: #666;
         }
     </style>
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar" aria-label="Main navigation">
-        <div class="sidebar-header">
-            <img src="https://via.placeholder.com/80" alt="Student Profile" class="profile-img">
-            <h2>John Doe</h2>
-            <p>Computer Science</p>
-        </div>
-        <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="#dashboard" class="nav-link active" aria-current="page">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#assignments" class="nav-link">
-                    <i class="fas fa-tasks"></i>
-                    <span>Assignments</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#grades" class="nav-link">
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">
                     <i class="fas fa-graduation-cap"></i>
-                    <span>Grades</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#profile" class="nav-link">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#messages" class="nav-link">
-                    <i class="fas fa-envelope"></i>
-                    <span>Messages</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <section id="dashboard" class="section" aria-labelledby="dashboard-heading">
-            <h2 id="dashboard-heading">Dashboard Overview</h2>
-            <div class="card-container">
-                <div class="card">
-                    <h3>Current Courses</h3>
-                    <p>You're enrolled in 5 courses this semester.</p>
                 </div>
-                <div class="card">
-                    <h3>Upcoming Deadlines</h3>
-                    <p>2 assignments due in the next 3 days.</p>
-                </div>
-                <div class="card">
-                    <h3>Recent Grades</h3>
-                    <p>Your average grade is 87%.</p>
-                </div>
-                <div class="card">
-                    <h3>Announcements</h3>
-                    <p>1 new announcement from your instructor.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="assignments" class="section" aria-labelledby="assignments-heading">
-            <h2 id="assignments-heading">Assignments</h2>
-            <div class="card-container">
-                <div class="card">
-                    <h3>Web Development</h3>
-                    <p>Due: May 15</p>
-                    <p>Status: In Progress</p>
-                </div>
-                <div class="card">
-                    <h3>Database Design</h3>
-                    <p>Due: May 18</p>
-                    <p>Status: Not Started</p>
-                </div>
-                <div class="card">
-                    <h3>Algorithms</h3>
-                    <p>Due: May 20</p>
-                    <p>Status: Submitted</p>
-                </div>
-                <div class="card">
-                    <h3>Software Engineering</h3>
-                    <p>Due: May 22</p>
-                    <p>Status: In Progress</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="grades" class="section" aria-labelledby="grades-heading">
-            <h2 id="grades-heading">Grades</h2>
-            <div class="card-container">
-                <div class="card">
-                    <h3>Web Development</h3>
-                    <p>Current Grade: 92%</p>
-                    <p>Class Average: 85%</p>
-                </div>
-                <div class="card">
-                    <h3>Database Design</h3>
-                    <p>Current Grade: 88%</p>
-                    <p>Class Average: 82%</p>
-                </div>
-                <div class="card">
-                    <h3>Algorithms</h3>
-                    <p>Current Grade: 85%</p>
-                    <p>Class Average: 78%</p>
-                </div>
-                <div class="card">
-                    <h3>Software Engineering</h3>
-                    <p>Current Grade: 90%</p>
-                    <p>Class Average: 87%</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="profile" class="section" aria-labelledby="profile-heading">
-            <h2 id="profile-heading">Profile Information</h2>
-            <div class="card">
-                <h3>Personal Details</h3>
-                <p><strong>Name:</strong> John Doe</p>
-                <p><strong>Email:</strong> john.doe@university.edu</p>
-                <p><strong>Major:</strong> Computer Science</p>
-                <p><strong>Enrollment Year:</strong> 2022</p>
-            </div>
-        </section>
-
-        <section id="messages" class="section" aria-labelledby="messages-heading">
-            <h2 id="messages-heading">Messages</h2>
-            <div class="card">
-                <h3>Recent Conversations</h3>
-                <p>No new messages</p>
-            </div>
-        </section>
-    </main>
-
-    <!-- Settings Button -->
-    <button class="settings-btn" aria-label="Open settings" id="settingsBtn">
-        <i class="fas fa-cog"></i>
-    </button>
-
-    <!-- Settings Modal -->
-    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-            <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
-            <h2 id="modalTitle">Settings</h2>
-            
-            <div class="modal-tabs">
-                <div class="modal-tab active" data-tab="appearance">Appearance</div>
-                <div class="modal-tab" data-tab="profile">Profile</div>
-                <div class="modal-tab" data-tab="password">Password</div>
+                <span>NeoLearn</span>
             </div>
             
-            <!-- Appearance Tab -->
-            <div class="tab-content active" id="appearance-tab">
-                <div class="modal-section">
-                    <h3>Theme Preferences</h3>
-                    <div class="form-group">
-                        <label for="darkModeToggle">Dark Mode</label>
-                        <div style="display: flex; align-items: center;">
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="darkModeToggle">
-                                <span class="toggle-slider"></span>
-                            </label>
-                            <span class="toggle-label" id="themeStatus">Off</span>
-                        </div>
+            <ul class="sidebar-nav">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Schedule</a></li>
+                <li><a href="#"><i class="fas fa-tasks"></i> Assignments</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> Grades</a></li>
+                <li><a href="#"><i class="fas fa-envelope"></i> Messages</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </div>
+        
+        <div class="main-content">
+            <div class="header">
+                <h1>Student Dashboard</h1>
+                
+                <div class="user-info">
+                    <div class="notification-bell">
+                        <i class="fas fa-bell"></i>
+                        <div class="notification-dot"></div>
+                    </div>
+                    <div class="avatar">JS</div>
+                    <span>John Smith</span>
+                </div>
+            </div>
+            
+            <div class="card-container">
+                <div class="card">
+                    <h3>Current GPA</h3>
+                    <p style="font-size: 32px; font-weight: bold; margin: 10px 0; color: #1a2a6c;">3.78</p>
+                    <p>+0.12 from last semester</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 85%"></div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Profile Tab -->
-            <div class="tab-content" id="profile-tab">
-                <div class="modal-section">
-                    <h3>Edit Profile</h3>
-                    <form id="profileForm">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" class="form-control" value="John Doe">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" class="form-control" value="john.doe@university.edu">
-                        </div>
-                        <div class="form-group">
-                            <label for="major">Major</label>
-                            <input type="text" id="major" class="form-control" value="Computer Science">
-                        </div>
-                        <button type="submit" class="btn btn-block">Save Changes</button>
-                    </form>
-                </div>
-            </div>
-            
-            <!-- Password Tab -->
-            <div class="tab-content" id="password-tab">
-                <div class="modal-section">
-                    <h3>Change Password</h3>
-                    <form id="passwordForm">
-                        <div class="form-group">
-                            <label for="currentPassword">Current Password</label>
-                            <input type="password" id="currentPassword" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newPassword">New Password</label>
-                            <input type="password" id="newPassword" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="confirmPassword">Confirm New Password</label>
-                            <input type="password" id="confirmPassword" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-block">Update Password</button>
-                    </form>
+                
+                <div class="card">
+                    <h3>Enrolled Courses</h3>
+                    <p style="font-size: 32px; font-weight: bold; margin: 10px 0; color: #1a2a6c;">5</p>
+                    <p>12 credits this semester</p>
                 </div>
                 
-                <div class="modal-section">
-                    <h3>Forgot Password</h3>
-                    <form id="forgotPasswordForm">
-                        <div class="form-group">
-                            <label for="forgotEmail">Email Address</label>
-                            <input type="email" id="forgotEmail" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-block">Send Reset Link</button>
-                    </form>
+                <div class="card">
+                    <h3>Pending Assignments</h3>
+                    <p style="font-size: 32px; font-weight: bold; margin: 10px 0; color: #1a2a6c;">3</p>
+                    <p>Next due: May 20</p>
+                </div>
+            </div>
+            
+            <h2>Current Courses</h2>
+            <table class="blue-table">
+                <thead>
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Instructor</th>
+                        <th>Progress</th>
+                        <th>Grade</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CS-401</td>
+                        <td>Advanced Algorithms</td>
+                        <td>Dr. Johnson</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 78%"></div>
+                            </div>
+                            <small>78% complete</small>
+                        </td>
+                        <td>A-</td>
+                        <td><span class="badge badge-primary">In Progress</span></td>
+                    </tr>
+                    <tr>
+                        <td>MATH-310</td>
+                        <td>Linear Algebra</td>
+                        <td>Prof. Chen</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 92%"></div>
+                            </div>
+                            <small>92% complete</small>
+                        </td>
+                        <td>A</td>
+                        <td><span class="badge badge-primary">In Progress</span></td>
+                    </tr>
+                    <tr>
+                        <td>PHYS-201</td>
+                        <td>Quantum Physics</td>
+                        <td>Dr. Rodriguez</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 65%"></div>
+                            </div>
+                            <small>65% complete</small>
+                        </td>
+                        <td>B+</td>
+                        <td><span class="badge badge-primary">In Progress</span></td>
+                    </tr>
+                    <tr>
+                        <td>ENG-205</td>
+                        <td>Technical Writing</td>
+                        <td>Prof. Williams</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 100%"></div>
+                            </div>
+                            <small>100% complete</small>
+                        </td>
+                        <td>A</td>
+                        <td><span class="badge badge-success">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>CS-350</td>
+                        <td>Database Systems</td>
+                        <td>Dr. Kim</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 88%"></div>
+                            </div>
+                            <small>88% complete</small>
+                        </td>
+                        <td>A-</td>
+                        <td><span class="badge badge-primary">In Progress</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="upcoming-events">
+                <h2>Upcoming Events</h2>
+                
+                <div class="event-item">
+                    <div class="event-date">
+                        <div class="day">20</div>
+                        <div class="month">May</div>
+                    </div>
+                    <div class="event-info">
+                        <h4>Advanced Algorithms - Final Exam</h4>
+                        <p>9:00 AM - 12:00 PM | Science Building Room 204</p>
+                    </div>
+                </div>
+                
+                <div class="event-item">
+                    <div class="event-date">
+                        <div class="day">22</div>
+                        <div class="month">May</div>
+                    </div>
+                    <div class="event-info">
+                        <h4>Database Systems - Project Submission</h4>
+                        <p>11:59 PM | Online Submission</p>
+                    </div>
+                </div>
+                
+                <div class="event-item">
+                    <div class="event-date">
+                        <div class="day">25</div>
+                        <div class="month">May</div>
+                    </div>
+                    <div class="event-info">
+                        <h4>Career Fair</h4>
+                        <p>10:00 AM - 4:00 PM | University Center</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // Highlight active section in sidebar while scrolling
-        document.addEventListener('DOMContentLoaded', function() {
-            const sections = document.querySelectorAll('.section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const settingsBtn = document.getElementById('settingsBtn');
-            const modalOverlay = document.getElementById('modalOverlay');
-            const modalClose = document.getElementById('modalClose');
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            const themeStatus = document.getElementById('themeStatus');
-            const modalTabs = document.querySelectorAll('.modal-tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-            const profileForm = document.getElementById('profileForm');
-            const passwordForm = document.getElementById('passwordForm');
-            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
-            
-            // Check for saved theme preference or use system preference
-            const savedTheme = localStorage.getItem('theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            
-            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-                document.body.classList.add('dark-mode');
-                darkModeToggle.checked = true;
-                themeStatus.textContent = 'On';
-            }
-            
-            // Function to update active nav link
-            function updateActiveNav() {
-                let index = sections.length;
-                
-                // Check which section is in view
-                while(--index && window.scrollY + 100 < sections[index].offsetTop) {}
-                
-                // Remove active class from all nav links
-                navLinks.forEach(link => link.classList.remove('active'));
-                
-                // Add active class to corresponding nav link
-                if (navLinks[index]) {
-                    navLinks[index].classList.add('active');
-                    navLinks[index].setAttribute('aria-current', 'page');
-                }
-                
-                // Remove aria-current from other links
-                navLinks.forEach((link, i) => {
-                    if (i !== index) {
-                        link.removeAttribute('aria-current');
-                    }
-                });
-            }
-            
-            // Initial call to set active nav on page load
-            updateActiveNav();
-            
-            // Update active nav on scroll
-            window.addEventListener('scroll', updateActiveNav);
-            
-            // Smooth scrolling for navigation links
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-                    
-                    // Scroll to the target section
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    
-                    // Update active nav after scroll completes
-                    setTimeout(updateActiveNav, 1000);
-                });
-            });
-            
-            // Modal functionality
-            function openModal() {
-                modalOverlay.classList.add('active');
-                modalOverlay.setAttribute('aria-hidden', 'false');
-                // Focus on first interactive element in modal
-                document.querySelector('.modal-tab').focus();
-                // Trap focus inside modal
-                trapFocus(modalOverlay);
-            }
-            
-            function closeModal() {
-                modalOverlay.classList.remove('active');
-                modalOverlay.setAttribute('aria-hidden', 'true');
-                // Return focus to settings button
-                settingsBtn.focus();
-            }
-            
-            settingsBtn.addEventListener('click', openModal);
-            modalClose.addEventListener('click', closeModal);
-            
-            // Close modal when clicking outside
-            modalOverlay.addEventListener('click', function(e) {
-                if (e.target === modalOverlay) {
-                    closeModal();
-                }
-            });
-            
-            // Close modal with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
-                    closeModal();
-                }
-            });
-            
-            // Dark mode toggle
-            darkModeToggle.addEventListener('change', function() {
-                document.body.classList.toggle('dark-mode');
-                const isDarkMode = document.body.classList.contains('dark-mode');
-                themeStatus.textContent = isDarkMode ? 'On' : 'Off';
-                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-            });
-            
-            // Tab switching
-            modalTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-                    
-                    // Update active tab
-                    modalTabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Update active content
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    document.getElementById(`${tabId}-tab`).classList.add('active');
-                });
-            });
-            
-            // Form submissions
-            profileForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                // In a real app, you would send this data to a server
-                alert('Profile updated successfully!');
-                closeModal();
-            });
-            
-            passwordForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const newPassword = document.getElementById('newPassword').value;
-                const confirmPassword = document.getElementById('confirmPassword').value;
-                
-                if (newPassword !== confirmPassword) {
-                    alert('Passwords do not match!');
-                    return;
-                }
-                
-                // In a real app, you would send this data to a server
-                alert('Password changed successfully!');
-                this.reset();
-            });
-            
-            forgotPasswordForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const email = document.getElementById('forgotEmail').value;
-                
-                // In a real app, you would send this email to a server
-                alert(`Password reset link sent to ${email}`);
-                this.reset();
-            });
-            
-            // Responsive behavior for mobile
-            function handleMobileView() {
-                const sidebar = document.querySelector('.sidebar');
-                if (window.innerWidth <= 768) {
-                    // Mobile view adjustments
-                    sidebar.style.position = 'relative';
-                } else {
-                    // Desktop view adjustments
-                    sidebar.style.position = 'sticky';
-                }
-            }
-            
-            // Initial call and event listener for window resize
-            handleMobileView();
-            window.addEventListener('resize', handleMobileView);
-            
-            // Focus trap for modal accessibility
-            function trapFocus(element) {
-                const focusableElements = element.querySelectorAll(
-                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-                );
-                const firstFocusable = focusableElements[0];
-                const lastFocusable = focusableElements[focusableElements.length - 1];
-                
-                element.addEventListener('keydown', function(e) {
-                    if (e.key !== 'Tab') return;
-                    
-                    if (e.shiftKey) {
-                        if (document.activeElement === firstFocusable) {
-                            lastFocusable.focus();
-                            e.preventDefault();
-                        }
-                    } else {
-                        if (document.activeElement === lastFocusable) {
-                            firstFocusable.focus();
-                            e.preventDefault();
-                        }
-                    }
-                });
-                
-                firstFocusable.focus();
-            }
-        });
-    </script>
 </body>
 </html>
